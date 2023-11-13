@@ -1,0 +1,46 @@
+@startuml
+class Cliente {
+    - nombre: String
+    - apellido: String
+    - email: String
+    - celular: String
+    + mostrar_cliente()
+}
+
+class Producto {
+    - nombre: String
+    - precio: Float
+    - cantidad: Int
+    + mostrar_producto()
+}
+
+class Gestiondeventas {
+    - clientes: List<Cliente>
+    - productos: List<Producto>
+    + agregar_cliente(cliente: Cliente)
+    + agregar_producto(producto: Producto)
+    + mostrar_clientes()
+    + mostrar_productos()
+    + realizar_venta(nombre_producto: String, cantidad_vendida: Int)
+}
+
+class Venta {
+    - producto: Producto
+    - cantidad: Int
+    - cliente: Cliente
+    + realizar_venta()
+}
+
+class Inventario {
+    + mostrar_inventario()
+}
+
+Gestiondeventas "1" -- "0..*" Cliente : contiene >
+Gestiondeventas "1" -- "0..*" Producto : contiene >
+Gestiondeventas "1" -- "0..*" Venta : contiene >
+
+Venta "*" -- "1" Cliente : contiene >
+Venta "*" -- "1" Producto : contiene >
+
+Producto <|-- Inventario
+@enduml
