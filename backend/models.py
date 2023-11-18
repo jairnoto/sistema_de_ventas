@@ -33,10 +33,14 @@ class Gestiondeventas:
         self.clientes.append(cliente)
         self.guardar_datos()
 
-    # Métodos para productos y ventas permanecen igual
+    def agregar_producto(self, producto):
+        self.productos.append(producto)
+        self.guardar_datos()
 
     def guardar_datos(self):
-        datos = {'clientes': [{'nombre': c.nombre, 'apellido': c.apellido, 'email': c.email, 'celular': c.celular} for c in self.clientes]}
+        datos_clientes = [{'nombre': c.nombre, 'apellido': c.apellido, 'email': c.email, 'celular': c.celular} for c in self.clientes]
+        datos_productos = [{'nombre': p.nombre, 'precio': p.precio, 'cantidad': p.cantidad} for p in self.productos]
+        datos = {'clientes': datos_clientes, 'productos': datos_productos}
         with open('datos.json', 'w') as archivo:
             json.dump(datos, archivo)
 
@@ -45,14 +49,14 @@ class Gestiondeventas:
             with open('datos.json', 'r') as archivo:
                 try:
                     datos_cargados = json.load(archivo)
-                    for c in datos_cargados['clientes']:
-                        self.clientes.append(Cliente(c['nombre'], c['apellido'], c['email'], c['celular']))
+                    self.clientes = [Cliente(c['nombre'], c['apellido'], c['email'], c['celular']) for c in datos_cargados.get('clientes', [])]
+                    self.productos = [Producto(p['nombre'], p['precio'], p['cantidad']) for p in datos_cargados.get('productos', [])]
                 except json.JSONDecodeError:
-                    # El archivo está vacío o con datos mal formados, iniciamos con una lista vacía.
                     self.clientes = []
+                    self.productos = []
         except FileNotFoundError:
-            # El archivo no existe, iniciamos con una lista vacía.
             self.clientes = []
+            self.productos = []
 
 
 class Venta:

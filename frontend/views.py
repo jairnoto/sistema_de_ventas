@@ -30,14 +30,21 @@ def mostrar_formulario_agregar_producto():
             st.success('Producto agregado con éxito!')
 
 def mostrar_clientes():
+    # Asegúrate de que los datos más recientes están cargados
+    sistema.cargar_datos()
     st.write("Clientes Registrados:")
     for cliente in sistema.clientes:
-        cliente.mostrar_cliente()
+        # Modificar esta línea si es necesario para ajustar el formato de presentación
+        st.write(f"Nombre: {cliente.nombre}, Apellido: {cliente.apellido}, Email: {cliente.email}, Celular: {cliente.celular}")
 
 def mostrar_productos():
+    # Asegúrate de que los datos más recientes están cargados
+    sistema.cargar_datos()
+
     st.write("Productos Registrados:")
     for producto in sistema.productos:
-        producto.mostrar_producto()
+        # Modificando esta línea para ajustar el formato de presentación
+        st.write(f"Nombre: {producto.nombre}, Precio: Bs {producto.precio}, Cantidad: {producto.cantidad}")
 
 def run():
     st.title('Sistema de Gestión de Ventas')
