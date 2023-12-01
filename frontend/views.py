@@ -49,6 +49,9 @@ def mostrar_productos():
 def run():
     st.title('Sistema de Gestión de Ventas')
 
+    imagen_path = 'frontend/compra.jpg' # Reemplaza con la ruta a tu imagen
+    imagen = st.image(imagen_path, caption='Imagen descriptiva', use_column_width=True)
+
     st.sidebar.title("Acciones")
     add_cliente = st.sidebar.checkbox("Agregar Cliente")
     add_producto = st.sidebar.checkbox("Agregar Producto")
